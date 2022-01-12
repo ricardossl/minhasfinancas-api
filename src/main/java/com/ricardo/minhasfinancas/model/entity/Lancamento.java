@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ricardo.minhasfinancas.model.enums.StatusLancamento;
 import com.ricardo.minhasfinancas.model.enums.TipoLancamento;
 
@@ -46,6 +47,7 @@ public class Lancamento {
 	@Enumerated(value = EnumType.STRING)
 	private StatusLancamento status;
 
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;

@@ -1,5 +1,7 @@
 package com.ricardo.minhasfinancas.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 		boolean existe = usuarioRepository.existsByEmail(email);
 		if (existe)
 			throw new RegraNegocioException("Já existe um usuário cadastrado com esse email.");
+	}
+
+	@Override
+	public Optional<Usuario> findById(Long id) {
+		return usuarioRepository.findById(id);
 	}
 
 }
