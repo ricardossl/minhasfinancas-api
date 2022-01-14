@@ -22,11 +22,17 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ricardo.minhasfinancas.model.enums.StatusLancamento;
 import com.ricardo.minhasfinancas.model.enums.TipoLancamento;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "lancamento", schema = "financas")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Lancamento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

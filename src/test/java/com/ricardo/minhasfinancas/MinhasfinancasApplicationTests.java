@@ -8,6 +8,8 @@ class MinhasfinancasApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
+		
 	}
 
 }
