@@ -1,9 +1,10 @@
-package com.ricardo.minhasfinancas.test;
+package com.ricardo.minhasfinancas.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.ricardo.minhasfinancas.exception.RegraNegocioException;
 import com.ricardo.minhasfinancas.model.entity.Lancamento;
+import com.ricardo.minhasfinancas.model.entity.Usuario;
 import com.ricardo.minhasfinancas.model.enums.StatusLancamento;
 import com.ricardo.minhasfinancas.model.repository.LancamentoRepository;
 import com.ricardo.minhasfinancas.model.repository.LancamentoRepositoryTest;
@@ -189,11 +191,49 @@ public class LancamentoServiceTest {
 		// Verfificação
 		assertFalse(resultado.isPresent());
 	}
-	
-	
+
 	@Test
 	public void deveLancaErrosAoValidarLancamento() {
+		Lancamento lancamento = new Lancamento();
+
+		Throwable erro = Assertions.catchThrowable(() -> service.validar(lancamento));
+		Assertions.assertThat(erro).isInstanceOf(RegraNegocioException.class)
+				.hasMessage("Informe uma descrição válida!");
 		
+		lancamento.setDescricao("");
 		
+		erro = Assertions.catchThrowable(() -> service.validar(lancamento));
+		Assertions.assertThat(erro).isInstanceOf(RegraNegocioException.class)
+				.hasMessage("Informe uma descrição válida!");
+
+		lancamento.setDescricao("Salário");
+
+		erro = Assertions.catchThrowable(() -> service.validar(lancamento));
+		Assertions.assertThat(erro).isInstanceOf(RegraNegocioException.class)
+				.hasMessage("Informe um mês válido");
+		
+		lancamento.setMes(1);
+		
+		erro = Assertions.catchThrowable(() -> service.validar(lancamento));
+		Assertions.assertThat(erro).isInstanceOf(RegraNegocioException.class)
+				.hasMessage("Informe um ano válido");
+		
+		lancamento.setAno(2022);
+		
+		erro = Assertions.catchThrowable(() -> service.validar(lancamento));
+		Assertions.assertThat(erro).isInstanceOf(RegraNegocioException.class)
+				.hasMessage("Informe um usuário");
+		
+		lancamento.setUsuario(Usuario.builder().id(1l).nome("Ricardo").build());
+		
+		erro = Assertions.catchThrowable(() -> service.validar(lancamento));
+		Assertions.assertThat(erro).isInstanceOf(RegraNegocioException.class)
+				.hasMessage("Informe um valor válido");
+		
+		lancamento.setValor(BigDecimal.valueOf(100));
+		
+		erro = Assertions.catchThrowable(() -> service.validar(lancamento));
+		Assertions.assertThat(erro).isInstanceOf(RegraNegocioException.class)
+				.hasMessage("Informe um tipo de lançamento");
 	}
 }

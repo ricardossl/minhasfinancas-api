@@ -1,4 +1,4 @@
-package com.ricardo.minhasfinancas.test;
+package com.ricardo.minhasfinancas.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,7 +20,6 @@ import com.ricardo.minhasfinancas.exception.ErroAutenticacao;
 import com.ricardo.minhasfinancas.exception.RegraNegocioException;
 import com.ricardo.minhasfinancas.model.entity.Usuario;
 import com.ricardo.minhasfinancas.model.repository.UsuarioRepository;
-import com.ricardo.minhasfinancas.service.UsuarioService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
