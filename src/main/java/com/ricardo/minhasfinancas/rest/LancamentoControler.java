@@ -105,6 +105,20 @@ public class LancamentoControler {
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("{id}")
+	public ResponseEntity obterPorId(@PathVariable("id") Long id) {
+		return lancamentoService.findById(id).map(lancamento -> {
+			return ResponseEntity.ok(converter(lancamento));
+		}).orElseGet(() -> new ResponseEntity("Lançamento não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
+	}
+
+	private LancamentoDTO converter(Lancamento lancamento) {
+		return LancamentoDTO.builder().id(lancamento.getId()).descricao(lancamento.getDescricao())
+				.mes(lancamento.getMes()).valor(lancamento.getValor()).status(lancamento.getStatus().name())
+				.tipo(lancamento.getTipo().name()).usuario(lancamento.getUsuario().getId()).ano(lancamento.getAno()).build();
+	}
+
 	private Lancamento converter(LancamentoDTO dto) {
 		Lancamento lancamento = new Lancamento();
 		lancamento.setId(dto.getId());

@@ -10,8 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +31,7 @@ public class Usuario {
 	private Long id;
 	private String nome;
 	private String email;
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String senha;
 	private Date data_cadastro;
 

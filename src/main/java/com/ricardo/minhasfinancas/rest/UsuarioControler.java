@@ -59,4 +59,13 @@ public class UsuarioControler {
 		BigDecimal saldo = lancamentoService.obterSaldoPorUsuario(id);
 		return ResponseEntity.ok(saldo);
 	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("{id}")
+	public ResponseEntity obterPorId(@PathVariable("id") Long id) {
+		return usuarioService.findById(id).map(usuario -> {
+			return ResponseEntity.ok(usuario);
+		}).orElseGet(() -> new ResponseEntity("Usuário não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
+	}
+
 }
